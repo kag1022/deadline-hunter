@@ -19,7 +19,7 @@ export function parseICS(icsData: string): Assignment[] {
       (a, b) => a.deadline.getTime() - b.deadline.getTime(),
     );
   } catch (error) {
-    console.error("ICS解析エラー:", error);
+    if (__DEV__) console.error("ICS解析エラー:", error);
     return [];
   }
 }
@@ -92,7 +92,7 @@ function eventToAssignment(event: RawICSEvent): Assignment | null {
   const deadline = parseICSDate(event.dtend);
 
   if (!deadline) {
-    console.warn(`日付パース失敗: ${event.dtend}`);
+    if (__DEV__) console.warn(`日付パース失敗: ${event.dtend}`);
     return null;
   }
 

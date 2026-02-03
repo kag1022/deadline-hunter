@@ -1,5 +1,9 @@
 import { BackgroundGradient } from "@/components/background-gradient";
-import { deleteICalUrl, getICalUrl, saveICalUrl } from "@/services/storage";
+import {
+    getMoodleUrl,
+    removeMoodleUrl,
+    saveMoodleUrl,
+} from "@/services/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import * as Clipboard from "expo-clipboard";
@@ -33,7 +37,7 @@ export default function SettingsScreen() {
   // 保存済みURLを読み込み
   useEffect(() => {
     const loadUrl = async () => {
-      const storedUrl = await getICalUrl();
+      const storedUrl = await getMoodleUrl();
       if (storedUrl) {
         setUrl(storedUrl);
         setSavedUrl(storedUrl);
@@ -124,7 +128,7 @@ export default function SettingsScreen() {
 
     setSaving(true);
     try {
-      await saveICalUrl(trimmedUrl);
+      await saveMoodleUrl(trimmedUrl);
       setSavedUrl(trimmedUrl);
 
       // セキュリティ: クリップボード履歴消去
@@ -151,7 +155,7 @@ export default function SettingsScreen() {
         text: "削除",
         style: "destructive",
         onPress: async () => {
-          await deleteICalUrl();
+          await removeMoodleUrl();
           setUrl("");
           setSavedUrl(null);
           Alert.alert("削除完了", "iCal URLを削除しました");

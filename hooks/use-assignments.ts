@@ -5,7 +5,7 @@ import {
 } from "@/services/notifications";
 import {
     getCompletedUids,
-    getICalUrl,
+    getMoodleUrl,
     saveCompletedUids,
 } from "@/services/storage";
 import { Assignment } from "@/types/assignment";
@@ -49,8 +49,8 @@ export function useAssignments(): UseAssignmentsResult {
     setError(null);
 
     try {
-      // iCal URLを取得
-      const url = await getICalUrl();
+      // Moodle URLを取得
+      const url = await getMoodleUrl();
       if (!url) {
         setHasUrl(false);
         setAssignments([]);
@@ -110,7 +110,7 @@ export function useAssignments(): UseAssignmentsResult {
         }
       }
     } catch (err) {
-      console.error("課題取得エラー:", err);
+      if (__DEV__) console.error("課題取得エラー:", err);
       setError(
         "課題データの取得に失敗しました。通信環境または設定されたURLを確認してください。",
       );
@@ -148,14 +148,14 @@ export function useAssignments(): UseAssignmentsResult {
           );
           if (targetAssignment && targetAssignment.deadline > new Date()) {
             await scheduleNotifications(targetAssignment);
-            console.log("通知を再予約しました:", uid);
+            if (__DEV__) console.log("通知を再予約しました:", uid);
           }
         } else {
           // 未完了 -> 完了: 通知をキャンセル
           await cancelNotificationsForAssignment(uid);
         }
       } catch (err) {
-        console.error("完了状態更新エラー:", err);
+        if (__DEV__) console.error("完了状態更新エラー:", err);
       }
     },
     [completedUids, assignments],
@@ -171,9 +171,10 @@ export function useAssignments(): UseAssignmentsResult {
    */
   const refreshIfUrlChanged = useCallback(async () => {
     if (loading) return;
-    const storedUrl = await getICalUrl();
+    const storedUrl = await getMoodleUrl();
     if (storedUrl !== loadedUrl) {
-      console.log("URL Changed (or first load), refreshing...", storedUrl);
+      if (__DEV__)
+        console.log("URL Changed (or first load), refreshing...", storedUrl);
       await fetchAssignments();
     }
   }, [loading, loadedUrl, fetchAssignments]);

@@ -20,7 +20,7 @@ export async function getSubjectAliases(): Promise<SubjectAliasMap> {
     if (!data) return {};
     return JSON.parse(data) as SubjectAliasMap;
   } catch (error) {
-    console.error("科目エイリアス取得エラー:", error);
+    if (__DEV__) console.error("科目エイリアス取得エラー:", error);
     return {};
   }
 }
@@ -36,7 +36,7 @@ export async function saveSubjectAliases(
   try {
     await AsyncStorage.setItem(SUBJECT_ALIASES_KEY, JSON.stringify(aliases));
   } catch (error) {
-    console.error("科目エイリアス保存エラー:", error);
+    if (__DEV__) console.error("科目エイリアス保存エラー:", error);
     throw new Error("科目エイリアスの保存に失敗しました");
   }
 }
@@ -56,7 +56,7 @@ export async function saveSubjectAlias(
     aliases[code] = name;
     await saveSubjectAliases(aliases);
   } catch (error) {
-    console.error("科目エイリアス保存エラー:", error);
+    if (__DEV__) console.error("科目エイリアス保存エラー:", error);
     throw new Error("科目エイリアスの保存に失敗しました");
   }
 }
@@ -72,7 +72,7 @@ export async function deleteSubjectAlias(code: string): Promise<void> {
     delete aliases[code];
     await saveSubjectAliases(aliases);
   } catch (error) {
-    console.error("科目エイリアス削除エラー:", error);
+    if (__DEV__) console.error("科目エイリアス削除エラー:", error);
     throw new Error("科目エイリアスの削除に失敗しました");
   }
 }

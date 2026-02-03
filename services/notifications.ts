@@ -30,7 +30,7 @@ export async function requestNotificationPermission(): Promise<boolean> {
     const { status } = await Notifications.requestPermissionsAsync();
     return status === "granted";
   } catch (error) {
-    console.error("通知許可リクエストエラー:", error);
+    if (__DEV__) console.error("通知許可リクエストエラー:", error);
     return false;
   }
 }
@@ -103,9 +103,10 @@ async function scheduleNotification(
       },
     });
 
-    console.log(`通知予約: ${identifier} at ${triggerDate.toLocaleString()}`);
+    if (__DEV__)
+      console.log(`通知予約: ${identifier} at ${triggerDate.toLocaleString()}`);
   } catch (error) {
-    console.error("通知スケジュールエラー:", error);
+    if (__DEV__) console.error("通知スケジュールエラー:", error);
   }
 }
 
@@ -121,9 +122,9 @@ export async function cancelNotificationsForAssignment(
   try {
     await Notifications.cancelScheduledNotificationAsync(uid + "_24h");
     await Notifications.cancelScheduledNotificationAsync(uid + "_1h");
-    console.log(`通知キャンセル: ${uid}`);
+    if (__DEV__) console.log(`通知キャンセル: ${uid}`);
   } catch (error) {
-    console.error("通知キャンセルエラー:", error);
+    if (__DEV__) console.error("通知キャンセルエラー:", error);
   }
 }
 
@@ -133,9 +134,9 @@ export async function cancelNotificationsForAssignment(
 export async function cancelAllNotifications(): Promise<void> {
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
-    console.log("全通知をキャンセルしました");
+    if (__DEV__) console.log("全通知をキャンセルしました");
   } catch (error) {
-    console.error("全通知キャンセルエラー:", error);
+    if (__DEV__) console.error("全通知キャンセルエラー:", error);
   }
 }
 
@@ -148,7 +149,7 @@ export async function getScheduledNotifications(): Promise<
   try {
     return await Notifications.getAllScheduledNotificationsAsync();
   } catch (error) {
-    console.error("スケジュール済み通知取得エラー:", error);
+    if (__DEV__) console.error("スケジュール済み通知取得エラー:", error);
     return [];
   }
 }
