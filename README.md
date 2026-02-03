@@ -1,50 +1,94 @@
-# Welcome to your Expo app 👋
+# Deadline Hunter 🎯
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Moodleの課題管理を快適に、美しく。
+「Deadline Hunter」は、Moodleのカレンダー(iCal)と連携し、課題の締め切りを自動取得・通知するiOS/Androidアプリです。
+最新の「Glassmorphism（すりガラス）」デザインを採用し、直感的な操作と美しいビジュアルを提供します。
 
-## Get started
+## ✨ 主な機能
 
-1. Install dependencies
+### 📅 自動課題取得 (iCal連携)
 
-   ```bash
-   npm install
-   ```
+- Moodleの「カレンダーをエクスポート」から取得したiCal URLを登録するだけで、全科目の課題を自動でリストアップします。
+- 課題は締め切りが近い順に並び替えられ、リアルタイムのカウントダウンが表示されます。
 
-2. Start the app
+### 🔔 スマート通知
 
-   ```bash
-   npx expo start
-   ```
+- **締め切りの24時間前**と**1時間前**にプッシュ通知を送信。
+- 課題提出のうっかり忘れを防止します。
 
-In the output, you'll find options to open the app in a
+### 🎨 Glassmorphism UI
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **美しいビジュアル**: パステルカラーのグラデーション背景と、すりガラス風のカードデザイン。
+- **直感的なインタラクション**:
+  - 完了した課題はアニメーション付きで非表示になります。
+  - 誤操作時には「完了済みリスト」からワンタップで復元可能（通知も自動で再予約されます）。
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 🏷️ 科目名のカスタマイズ
 
-## Get a fresh project
+- 複雑な科目コード（例: `2024-L-CSE101...`）に、わかりやすい別名（例: `プログラミングI`）を設定できます。
+- 設定した名前はリスト全体に反映されます。
 
-When you're ready, run:
+### 🔄 オフライン対応
+
+- 一度取得したデータは保存されるため、オフラインでも課題確認が可能です。
+
+---
+
+## 🛠 技術スタック
+
+- **Framework**: [Expo (React Native)](https://expo.dev)
+- **Language**: TypeScript
+- **UI/UX**:
+  - `expo-blur` (すりガラス効果)
+  - `expo-linear-gradient` (グラデーション)
+  - `Animated` (React Native Standard API)
+- **Data**: `ics` parsing (custom parser), `AsyncStorage` (persistence)
+- **Notification**: `expo-notifications`
+- **Routing**: `expo-router`
+
+---
+
+## 🚀 セットアップ方法
+
+### 前提条件
+
+- Node.js
+- npm
+
+### インストールと起動
 
 ```bash
-npm run reset-project
+# 依存関係のインストール
+npm install
+
+# アプリの起動
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Moodleとの連携方法
 
-## Learn more
+1. アプリを起動し、右上の「設定」アイコンをタップ、または画面の指示に従って設定画面を開きます。
+2. ブラウザでMoodleにログインし、「カレンダー」ページへ移動します。
+3. ページ下部の「カレンダーをエクスポート」を選択します。
+4. 「iCalendar URLを取得」ボタンを押し、表示されたURLをコピーします。
+5. アプリの設定画面にURLを貼り付け、「保存」をタップします。
+6. 自動的に課題がロードされます。
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 📱 画面構成
 
-## Join the community
+- **課題一覧 (Tabs/Index)**: 次に提出すべき課題が一目でわかるメイン画面。
+- **科目設定 (Tabs/Subjects)**: 長い科目コードを、自分がわかりやすい名前に変更できます。
+- **設定 (Tabs/Settings)**: iCal URLの登録・更新や、接続テストを行います。
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## ⚠️ 注意事項
+
+- 本アプリはMoodle公式アプリではありません。カレンダーの公開URL（iCal）機能を利用しています。
+- 大学や組織の設定によっては、iCal URLの発行が制限されている場合があります。
+
+---
+
+Created by **Antigravity**

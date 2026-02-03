@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "my-moodle-app",
-    "slug": "my-moodle-app",
+    "name": "Deadline Hunter",
+    "slug": "deadline-hunter",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mymoodleapp",
-    "userInterfaceStyle": "automatic",
+    "scheme": "deadlinehunter",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -37,6 +37,13 @@
           "dark": {
             "backgroundColor": "#000000"
           }
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "sounds": []
         }
       ]
     ],
